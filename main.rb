@@ -5,7 +5,7 @@ include DXOpal
 require_remote 'player.rb'
 require_remote 'enemy.rb'
 
-Image.register(:player, 'images/player.png') 
+Image.register(:player, 'images/hito.jpg') 
 Image.register(:enemy, 'images/enemy.png') 
 
 Window.load_resources do
