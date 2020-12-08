@@ -9,13 +9,6 @@ class Tama<Sprite
     @now_y=y
     @image = Image[:Tama]
     super(@now_x,@now_y,@image)
-  end
-  
-  def tama_vec
-      
-  end
-  
-  def update
     if Input.mouse_pos_x>@now_x
         ddx=Input.mouse_pos_x-@now_x
         @tamahoukou=true
@@ -27,6 +20,11 @@ class Tama<Sprite
     ddy = Input.mouse_pos_y-@now_y
     @dx = Math.cos(Math.atan(ddy/ddx)).to_f
     @dy = Math.sin(Math.atan(ddy/ddx)).to_f  
+  end
+ 
+  
+  def update
+    
     
     if @tamahoukou == true
       self.x+=@dx*5
