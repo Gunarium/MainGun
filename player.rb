@@ -43,7 +43,6 @@ class Player < Sprite
         self.y = GROUND_Y - Image[:player].height
       end
     end
-      w
     if Input.key_push?(K_W) && @two != 2 
       @two += 1
       @y_prev = self.y
