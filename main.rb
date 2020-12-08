@@ -34,11 +34,8 @@ Window.load_resources do
   Window.loop do
   
     player.update
-    if time==15
+    if time%15==0
       tama << Tama.new(player.x,player.y)
-      time=0
-    else
-      time+=1
     end  
     Sprite.update(tama)
     
@@ -57,5 +54,6 @@ Window.load_resources do
     Sprite.draw(tama)
     # アイテムの描画
     items.draw
+    time+=1
   end
 end
