@@ -4,7 +4,7 @@ require_remote "player.rb"
 require_remote "item.rb"
 require_remote "items.rb"
 require_remote "Tama.rb"
-$time=0
+time=0
 GROUND_Y = 800
 
 Image.register(:scaffold, 'images/ashiba.png')
@@ -34,8 +34,8 @@ Window.load_resources do
   Window.loop do
   
     player.update
-    if $time%15==0
-      tama << Tama.new(player.x,player.y,$time)
+    if time%15==0
+      tama << Tama.new(player.x,player.y)
     end  
     Sprite.update(tama)
     
@@ -54,6 +54,6 @@ Window.load_resources do
     Sprite.draw(tama)
     # アイテムの描画
     items.draw
-    $time+=1
+    time+=1
   end
 end
