@@ -27,11 +27,11 @@ class Tama<Sprite
     
     
     if @tamahoukou == true
-      self.x+=@dx*5
+      self.x+=@dx*50
     else
-      self.x-=@dx*5
+      self.x-=@dx*50
     end  
-    self.y+=@dy*5
+    self.y+=@dy*50
   end  
    
     
