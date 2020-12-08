@@ -1,38 +1,22 @@
-# coding: utf-8
 require 'dxopal'
 include DXOpal
-
-require_remote 'player.rb'
-require_remote 'enemy.rb'
-
-Image.register(:player, 'images/hito.jpg') 
-Image.register(:enemy, 'images/enemy.png') 
-
+require_remote "player.rb"
+require_remote "item.rb"
+require_remote "items.rb"
+GROUND_Y = 400
+Image.register(:player, 'images/player.png')
 Window.load_resources do
-  Window.width  = 800
-  Window.height = 600
-
-  player_img = Image[:player]
-  player_img.set_color_key([0, 0, 0])
-
-  enemy_img = Image[:enemy]
-  enemy_img.set_color_key([0, 0, 0])
-
-  player = Player.new(400, 500, player_img)
-
-  enemies = []
-  10.times do
-    enemies << Enemy.new(rand(800), rand(600), enemy_img)
-  end
-
+  player = Player.new
+  # Itemsクラスのオブジェクトを作る
+  items = Items.new
   Window.loop do
-    Sprite.update(enemies)
-    Sprite.draw(enemies)
-
     player.update
+    # アイテムの作成・移動・削除
+    items.update
+    Window.draw_box_fill(0, 0, Window.width, GROUND_Y, [128, 255, 255])
+    Window.draw_box_fill(0, GROUND_Y, Window.width, Window.height, [0, 128, 0])
     player.draw
-
-    # 当たり判定
-    Sprite.check(player, enemies)
+    # アイテムの描画
+    items.draw
   end
 end
