@@ -4,6 +4,7 @@ Image.register(:player, 'images/player.png')
 GROUND_Y = 400
 # プレイヤーを表すクラスを定義
 class Player < Sprite
+  attr_reader :x, :y
   def initialize
     x = Window.width / 2
     y = GROUND_Y - Image[:player].height
