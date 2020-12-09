@@ -28,4 +28,8 @@ class Enemy < Sprite
       
     end
   end
+  
+  def hit
+    #self.vanish
+  end
 end
