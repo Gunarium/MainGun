@@ -24,6 +24,7 @@ Window.load_resources do
   enemy = Enemy.new
   tama=[]
   bullet = []
+  enemy_appear = true
   
   # 足場を配置
   scaffolds = []
@@ -49,15 +50,22 @@ Window.load_resources do
     
     player.draw
     Sprite.draw(tama)
-  
-    # enemy  
-    enemy.update
-    if time % 20 == 0
-      bullet << Bullet.new(enemy.x , enemy.y)
+    
+    
+    if enemy_appear == true
+      enemy.update
+      if time % 20 == 0
+        bullet << Bullet.new(enemy.x , enemy.y)
+      end
+      Sprite.update(bullet)
+      
+      enemy.draw
+      Sprite.draw(bullet)
+      
+      Sprite.check(tama , enemy)
+      
     end
-    Sprite.update(bullet)
-    enemy.draw
-    Sprite.draw(bullet)
+    
     time+=1
   end
 end

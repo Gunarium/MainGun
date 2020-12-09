@@ -13,6 +13,10 @@ class Bullet < Sprite
   
   def update
       @y -= 10
+      
+      if @y < 0
+        self.vanish
+      end
   end
   
 end  

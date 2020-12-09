@@ -35,6 +35,10 @@ class Tama<Sprite
     end  
   end  
   
+  def shot
+    self.vanish
+  end
+  
  
     
 end  
