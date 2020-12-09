@@ -1,8 +1,6 @@
 require 'dxopal'
 include DXOpal
 require_remote "player.rb"
-require_remote "item.rb"
-require_remote "items.rb"
 require_remote "Tama.rb"
 require_remote "bullet.rb"
 require_remote "enemy.rb"
@@ -13,6 +11,7 @@ GROUND_Y = 800
 
 Image.register(:scaffold, 'images/ashiba.png')
 Image.register(:scaffold_long, 'images/ashiba_long.png')
+Image.register(:floor, 'images/floor.png')
 
 Window.load_resources do
   
@@ -25,21 +24,17 @@ Window.load_resources do
   tama=[]
   bullet = []
   
-  # Itemsクラスのオブジェクトを作る
-  items = Items.new
+  
   
   # 足場を配置
-  scaffold_img = Image[:scaffold]
-  scaffold_long_img = Image[:scaffold_long]
-  
   scaffolds = []
-  scaffolds << Sprite.new(0, 500, scaffold_img)
-  scaffolds << Sprite.new(1240, 500, scaffold_img)
-  scaffolds << Sprite.new(Window.width/2 - 250, 300, scaffold_long_img)
+  scaffolds << Sprite.new(0, 500, Image[:scaffold])
+  scaffolds << Sprite.new(1240, 500, Image[:scaffold])
+  scaffolds << Sprite.new(Window.width/2 - 250, 300, Image[:scaffold_long])
+  scaffolds << Sprite.new(0, 800, Image[:floor])
  
   Window.loop do
   
-    player.update
     enemy.update
     
     if time%15==0
@@ -53,22 +48,17 @@ Window.load_resources do
     
     Sprite.update(bullet)
     
-    # アイテムの作成・移動・削除
-    items.update
     Window.draw_box_fill(0, 0, Window.width, GROUND_Y, [128, 255, 255])
     Window.draw_box_fill(0, GROUND_Y, Window.width, Window.height, [0, 128, 0])
     
-    Sprite.update(scaffolds)
     Sprite.draw(scaffolds)
-    
-    # 当たり判定
     Sprite.check(player, scaffolds)
     
+    player.update
     player.draw
+    
     Sprite.draw(tama)
     enemy.draw
-    # アイテムの描画
-    items.draw
     Sprite.draw(bullet)
     time+=1
   end
