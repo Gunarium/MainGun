@@ -1,5 +1,6 @@
 require 'dxopal'
 include DXOpal
+
 require_remote "player.rb"
 require_remote "Tama.rb"
 require_remote "bullet.rb"
@@ -24,8 +25,6 @@ Window.load_resources do
   tama=[]
   bullet = []
   
-  
-  
   # 足場を配置
   scaffolds = []
   scaffolds << Sprite.new(0, 500, Image[:scaffold])
@@ -34,30 +33,29 @@ Window.load_resources do
   scaffolds << Sprite.new(0, 800, Image[:floor])
  
   Window.loop do
-  
-    enemy.update
     
-    if time%15==0
+    # ステージを描画
+    Window.draw_box_fill(0, 0, Window.width, GROUND_Y, [128, 255, 255])
+    Sprite.draw(scaffolds)
+    
+    # player
+    Sprite.check(player, scaffolds)
+    player.update
+    
+    if (time%15==0 && Input.mouse_down?(M_LBUTTON)) || Input.mouse_push?(M_LBUTTON)
       tama << Tama.new(player.x,player.y)
     end  
     Sprite.update(tama)
     
+    player.draw
+    Sprite.draw(tama)
+  
+    # enemy  
+    enemy.update
     if time % 20 == 0
       bullet << Bullet.new(enemy.x , enemy.y)
     end
-    
     Sprite.update(bullet)
-    
-    Window.draw_box_fill(0, 0, Window.width, GROUND_Y, [128, 255, 255])
-    Window.draw_box_fill(0, GROUND_Y, Window.width, Window.height, [0, 128, 0])
-    
-    Sprite.draw(scaffolds)
-    Sprite.check(player, scaffolds)
-    
-    player.update
-    player.draw
-    
-    Sprite.draw(tama)
     enemy.draw
     Sprite.draw(bullet)
     time+=1

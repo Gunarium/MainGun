@@ -65,7 +65,7 @@ class Player < Sprite
     end
   end
   
-   def shot(o)
+  def shot(o)
     if self.y <= @y_prev || self.y > o.y
       next
     else
