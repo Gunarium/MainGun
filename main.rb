@@ -4,7 +4,11 @@ require_remote "player.rb"
 require_remote "item.rb"
 require_remote "items.rb"
 require_remote "Tama.rb"
+require_remote "bullet.rb"
+require_remote "enemy.rb"
+
 time=0
+
 GROUND_Y = 800
 
 Image.register(:scaffold, 'images/ashiba.png')
@@ -17,7 +21,9 @@ Window.load_resources do
   Window.height = 880
   
   player = Player.new
+  enemy = Enemy.new
   tama=[]
+  bullet = []
   
   # Itemsクラスのオブジェクトを作る
   items = Items.new
@@ -34,10 +40,18 @@ Window.load_resources do
   Window.loop do
   
     player.update
+    enemy.update
+    
     if time%15==0
       tama << Tama.new(player.x,player.y)
     end  
     Sprite.update(tama)
+    
+    if time % 20 == 0
+      bullet << Bullet.new(enemy.x , enemy.y)
+    end
+    
+    Sprite.update(bullet)
     
     # アイテムの作成・移動・削除
     items.update
@@ -52,8 +66,10 @@ Window.load_resources do
     
     player.draw
     Sprite.draw(tama)
+    enemy.draw
     # アイテムの描画
     items.draw
+    Sprite.draw(bullet)
     time+=1
   end
 end
