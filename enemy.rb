@@ -4,12 +4,13 @@ include DXOpal
 Image.register(:apple, 'images/apple.png')
 # アイテムを表すクラスを追加
 class Enemy < Sprite
-  attr_reader :x, :y
+  attr_reader :x, :y ,:enemy_appear
   def initialize
     image = Image[:apple]
     @x = 200  # x座標をランダムに決める
     @y = 400
     @vec = true #right=>True
+    @enemy_appear = true
     super(@x, @y, image)
   end
 
@@ -30,6 +31,7 @@ class Enemy < Sprite
   end
   
   def hit
-    #self.vanish
+    self.vanish
+    @enemy_appear = false
   end
 end

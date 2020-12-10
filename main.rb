@@ -21,10 +21,12 @@ Window.load_resources do
   Window.height = 880
   
   player = Player.new
-  enemy = Enemy.new
+  #enemy = Enemy.new
   tama=[]
+  enemy=[]
+  enemy << Enemy.new
   bullet = []
-  enemy_appear = true
+  #enemy_appear = true
   
   # 足場を配置
   scaffolds = []
@@ -52,20 +54,18 @@ Window.load_resources do
     Sprite.draw(tama)
     
     
-    if enemy_appear == true
-      enemy.update
+    if enemy[0].enemy_appear == true
+      Sprite.update(enemy)
+      
       if time % 20 == 0
-        bullet << Bullet.new(enemy.x , enemy.y)
+        bullet << Bullet.new(enemy[0].x , enemy[0].y)
       end
-      Sprite.update(bullet)
       
-      enemy.draw
-      Sprite.draw(bullet)
-      
+      Sprite.draw(enemy)
       Sprite.check(tama , enemy)
-      
     end
-    
+    Sprite.update(bullet)
+    Sprite.draw(bullet)
     time+=1
   end
 end
