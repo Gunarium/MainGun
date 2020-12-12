@@ -5,6 +5,7 @@ require_remote "player.rb"
 require_remote "Tama.rb"
 require_remote "bullet.rb"
 require_remote "enemy.rb"
+require_remote "bgm.rb"
 
 time=0
 
@@ -34,9 +35,15 @@ Window.load_resources do
   scaffolds << Sprite.new(1240, 500, Image[:scaffold])
   scaffolds << Sprite.new(Window.width/2 - 250, 300, Image[:scaffold_long])
   scaffolds << Sprite.new(0, 800, Image[:floor])
- 
+  
+  #BGM
+  bgm = Bgm.new
+  
   Window.loop do
     
+    if time % (60*(60+13)) == 0
+      bgm.play
+    end
     # ステージを描画
     Window.draw_box_fill(0, 0, Window.width, GROUND_Y, [128, 255, 255])
     Sprite.draw(scaffolds)
@@ -53,14 +60,14 @@ Window.load_resources do
     player.draw
     Sprite.draw(tama)
     
-    
     if enemy[0].enemy_appear == true
       Sprite.update(enemy)
       
       if time % 20 == 0
         bullet << Bullet.new(enemy[0].x , enemy[0].y)
       end
-      
+      Sprite.update(bullet)
+      Sprite.draw(bullet)
       Sprite.draw(enemy)
       Sprite.check(tama , enemy)
     end
