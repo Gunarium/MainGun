@@ -2,6 +2,7 @@ require 'dxopal'
 include DXOpal
 
 Image.register(:apple, 'images/apple.png')
+Sound.register(:explosion, 'sounds/explosion.wav')
 # アイテムを表すクラスを追加
 class Enemy < Sprite
   attr_reader :x, :y ,:enemy_appear
@@ -33,5 +34,6 @@ class Enemy < Sprite
   def hit
     self.vanish
     @enemy_appear = false
+    Sound[:explosion].play
   end
 end
