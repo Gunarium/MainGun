@@ -61,7 +61,7 @@ class Player < Sprite
         @two += 1
       end
       @y_prev = self.y
-      self.y -= 20
+      self.y -= 16
     end
   end
   

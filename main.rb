@@ -9,17 +9,22 @@ require_remote "bgm.rb"
 
 time=0
 
-GROUND_Y = 800
+GROUND_Y = 700
 
 Image.register(:scaffold, 'images/ashiba.png')
 Image.register(:scaffold_long, 'images/ashiba_long.png')
 Image.register(:floor, 'images/floor.png')
+Image.register(:title, 'images/title.PNG')
+
+GAME_INFO = {
+  scene: :title,  # 現在のシーン(起動直後は:title)
+}
 
 Window.load_resources do
   
   # Windowサイズ設定
-  Window.width  = 1540
-  Window.height = 880
+  Window.width  = 1000
+  Window.height = 750
   
   player = Player.new
   #enemy = Enemy.new
@@ -31,48 +36,63 @@ Window.load_resources do
   
   # 足場を配置
   scaffolds = []
-  scaffolds << Sprite.new(0, 500, Image[:scaffold])
-  scaffolds << Sprite.new(1240, 500, Image[:scaffold])
-  scaffolds << Sprite.new(Window.width/2 - 250, 300, Image[:scaffold_long])
-  scaffolds << Sprite.new(0, 800, Image[:floor])
+   scaffolds << Sprite.new(0, (GROUND_Y*2/3).to_i, Image[:scaffold])
+  scaffolds << Sprite.new(Window.width - Image[:scaffold].width, (GROUND_Y*2/3).to_i, Image[:scaffold])
+  scaffolds << Sprite.new(Window.width/2 - 250, (GROUND_Y/3).to_i, Image[:scaffold_long])
+  scaffolds << Sprite.new(0, GROUND_Y, Image[:floor])
   
   #BGM
   bgm = Bgm.new
   
   Window.loop do
     
-    if time % (60*(60+13)) == 0
-      bgm.play
-    end
-    # ステージを描画
-    Window.draw_box_fill(0, 0, Window.width, GROUND_Y, [128, 255, 255])
-    Sprite.draw(scaffolds)
-    
-    # player
-    Sprite.check(player, scaffolds)
-    player.update
-    
-    if (time%15==0 && Input.mouse_down?(M_LBUTTON)) || Input.mouse_push?(M_LBUTTON)
-      tama << Tama.new(player.x,player.y)
-    end  
-    Sprite.update(tama)
-    
-    player.draw
-    Sprite.draw(tama)
-    
-    if enemy[0].enemy_appear == true
-      Sprite.update(enemy)
+    # シーンごとの処理
+    case GAME_INFO[:scene]
+    when :title
       
-      if time % 20 == 0
-        bullet << Bullet.new(enemy[0].x , enemy[0].y)
+      # タイトル画面
+      Window.draw(0, 0, Image[:title])
+      
+      # スペースキーが押されたらシーンを変える
+      if Input.key_push?(K_SPACE)
+        GAME_INFO[:scene] = :playing
+      end
+    
+    when :playing
+    
+      if time % (60*(60+13)) == 0
+        bgm.play
+      end
+      # ステージを描画
+      Window.draw_box_fill(0, 0, Window.width, GROUND_Y, [128, 255, 255])
+      Sprite.draw(scaffolds)
+      
+      # player
+      Sprite.check(player, scaffolds)
+      player.update
+      
+      if (time%15==0 && Input.mouse_down?(M_LBUTTON)) || Input.mouse_push?(M_LBUTTON)
+        tama << Tama.new(player.x,player.y)
+      end  
+      Sprite.update(tama)
+      
+      player.draw
+      Sprite.draw(tama)
+      
+      if enemy[0].enemy_appear == true
+        Sprite.update(enemy)
+        
+        if time % 20 == 0
+          bullet << Bullet.new(enemy[0].x , enemy[0].y)
+        end
+        Sprite.update(bullet)
+        Sprite.draw(bullet)
+        Sprite.draw(enemy)
+        Sprite.check(tama , enemy)
       end
       Sprite.update(bullet)
       Sprite.draw(bullet)
-      Sprite.draw(enemy)
-      Sprite.check(tama , enemy)
+      time+=1
     end
-    Sprite.update(bullet)
-    Sprite.draw(bullet)
-    time+=1
   end
 end
