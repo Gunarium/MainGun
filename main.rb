@@ -7,7 +7,7 @@ require_remote "bullet.rb"
 require_remote "enemy.rb"
 require_remote "bgm.rb"
 require_remote "enemy2.rb"
-require_remote "bullet2.rb"
+#require_remote "bullet2.rb"
 require_remote "enemies.rb"
 
 
