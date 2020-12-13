@@ -22,10 +22,10 @@ class Player < Sprite
   def update
     if Input.key_down?(K_A) && self.x > 0
       #image = image_left
-      self.x -= 8
+      self.x -= 6
     elsif Input.key_down?(K_D) && self.x < (Window.width - Image[:player].width)
       #image = image_right
-      self.x += 8
+      self.x += 6
     end
     
     # 空中の処理
