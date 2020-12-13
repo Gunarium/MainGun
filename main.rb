@@ -145,6 +145,7 @@ Window.load_resources do
       
       player.draw
       Sprite.draw(tama)
+      time+=1
     end
   end
 end
