@@ -12,6 +12,7 @@ class Enemy2 < Sprite
     @y = y
     @vec = true #right=>True
     @enemy_appear = true
+    @hit = 0
     super(@x, @y, image)
   end
 
@@ -32,8 +33,12 @@ class Enemy2 < Sprite
   end
   
   def hit
-    self.vanish
-    @enemy_appear = false
-    Sound[:explosion].play
+    if @hit < 5
+      @hit += 1
+    else
+      self.vanish
+      @enemy_appear = false
+      Sound[:explosion].play
+    end
   end
 end
