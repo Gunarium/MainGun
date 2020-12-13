@@ -97,6 +97,7 @@ Window.load_resources do
       
       
       Sprite.check(tama , enemy.enemies)
+      Sprite.check(tama,scaffolds)
         
       enemy.draw
       
