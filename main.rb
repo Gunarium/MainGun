@@ -6,6 +6,10 @@ require_remote "Tama.rb"
 require_remote "bullet.rb"
 require_remote "enemy.rb"
 require_remote "bgm.rb"
+require_remote "enemy2.rb"
+require_remote "bullet2.rb"
+require_remote "enemies.rb"
+
 
 time=0
 
@@ -29,14 +33,14 @@ Window.load_resources do
   player = Player.new
   #enemy = Enemy.new
   tama=[]
-  enemy=[]
-  enemy << Enemy.new
+  
+  enemy = Enemies.new
+  
   bullet = []
-  #enemy_appear = true
   
   # 足場を配置
   scaffolds = []
-   scaffolds << Sprite.new(0, (GROUND_Y*2/3).to_i, Image[:scaffold])
+  scaffolds << Sprite.new(0, (GROUND_Y*2/3).to_i, Image[:scaffold])
   scaffolds << Sprite.new(Window.width - Image[:scaffold].width, (GROUND_Y*2/3).to_i, Image[:scaffold])
   scaffolds << Sprite.new(Window.width/2 - 250, (GROUND_Y/3).to_i, Image[:scaffold_long])
   scaffolds << Sprite.new(0, GROUND_Y, Image[:floor])
@@ -71,6 +75,8 @@ Window.load_resources do
       Sprite.check(player, scaffolds)
       player.update
       
+      enemy.update
+      
       if (time%15==0 && Input.mouse_down?(M_LBUTTON)) || Input.mouse_push?(M_LBUTTON)
         tama << Tama.new(player.x,player.y)
       end  
@@ -79,17 +85,21 @@ Window.load_resources do
       player.draw
       Sprite.draw(tama)
       
-      if enemy[0].enemy_appear == true
-        Sprite.update(enemy)
-        
-        if time % 20 == 0
-          bullet << Bullet.new(enemy[0].x , enemy[0].y)
+      #敵1
+      for i in 0..2
+        if enemy.enemies[i].enemy_appear == true
+          if time % rand(10..20) == 0
+            bullet << Bullet.new(enemy.enemies[i].x , enemy.enemies[i].y)
+          end
         end
-        Sprite.update(bullet)
-        Sprite.draw(bullet)
-        Sprite.draw(enemy)
-        Sprite.check(tama , enemy)
       end
+  
+      
+      
+      Sprite.check(tama , enemy.enemies)
+        
+      enemy.draw
+      
       Sprite.update(bullet)
       Sprite.draw(bullet)
       time+=1
