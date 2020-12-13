@@ -9,7 +9,7 @@ class Enemy2 < Sprite
   def initialize(x , y)
     image = Image[:apple]
     @x = x 
-    @y = y
+    @y = y - Image[:apple].height
     @vec = true #right=>True
     @enemy_appear = true
     @hit = 0
@@ -18,14 +18,14 @@ class Enemy2 < Sprite
 
   def update
     if @vec == true
-      @y += 4
-      if @y > 400
+      @x += 4
+      if @x >  1000 - Image[:apple].width
         @vec = false
       end
     
     elsif @vec == false
-      @y -= 4
-      if @y < 200
+      @x -= 4
+      if @x < 700
         @vec = true
       end
       

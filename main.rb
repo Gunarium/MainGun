@@ -7,8 +7,12 @@ require_remote "bullet.rb"
 require_remote "enemy.rb"
 require_remote "bgm.rb"
 require_remote "enemy2.rb"
-#require_remote "bullet2.rb"
+require_remote "enemy3.rb"
+require_remote "enemy4.rb"
 require_remote "enemies.rb"
+
+Image.register(:Tama,'images/player.png')
+Image.register(:apple, 'images/apple.png')
 
 
 time=0
@@ -86,10 +90,10 @@ Window.load_resources do
       Sprite.draw(tama)
       
       #敵1
-      for i in 0..2
+      for i in 0..4
         if enemy.enemies[i].enemy_appear == true
           if time % rand(10..20) == 0
-            bullet << Bullet.new(enemy.enemies[i].x , enemy.enemies[i].y)
+            bullet << Bullet.new(enemy.enemies[i].x , enemy.enemies[i].y + Image[:apple].height - Image[:Tama].height)
           end
         end
       end

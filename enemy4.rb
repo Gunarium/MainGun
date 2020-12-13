@@ -4,7 +4,7 @@ include DXOpal
 Image.register(:apple, 'images/apple.png')
 Sound.register(:explosion, 'sounds/explosion.wav')
 # アイテムを表すクラスを追加
-class Enemy < Sprite
+class Enemy4 < Sprite
   attr_reader :x, :y ,:enemy_appear
   def initialize(x,y)
     image = Image[:apple]
@@ -19,13 +19,13 @@ class Enemy < Sprite
   def update
     if @vec == true
       @x += 4
-      if @x > 300 - Image[:apple].width
+      if @x > 780 - Image[:apple].width
         @vec = false
       end
     
     elsif @vec == false
       @x -= 4
-      if @x < 0
+      if @x < 230
         @vec = true
       end
       
