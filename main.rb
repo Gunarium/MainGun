@@ -123,8 +123,28 @@ Window.load_resources do
       
       if wave
         Sprite.clean(enemy.enemies)
-        GAME_INFO[:scene] = :title
+        GAME_INFO[:scene] = :boss
       end
+      
+    when :boss
+      if time % (60*(60+13)) == 0
+        bgm.play
+      end
+      # ステージを描画
+      Window.draw_box_fill(0, 0, Window.width, GROUND_Y, [0, 0, 0])
+      Sprite.draw(scaffolds)
+      
+      # player
+      Sprite.check(player, scaffolds)
+      player.update
+      
+      if (time%15==0 && Input.mouse_down?(M_LBUTTON)) || Input.mouse_push?(M_LBUTTON)
+        tama << Tama.new(player.x,player.y)
+      end  
+      Sprite.update(tama)
+      
+      player.draw
+      Sprite.draw(tama)
     end
   end
 end
