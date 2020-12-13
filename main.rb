@@ -13,6 +13,7 @@ require_remote "enemies.rb"
 
 Image.register(:Tama,'images/player.png')
 Image.register(:apple, 'images/apple.png')
+Image.register(:Heart,'images/player.png')
 
 
 time=0
@@ -37,6 +38,11 @@ Window.load_resources do
   player = Player.new
   #enemy = Enemy.new
   tama=[]
+  $hearts=[]
+  for i in 0..3
+    $hearts << Sprite.new(Window.width-(i*Image[:Heart].width),Window.height-Image[:Heart].height , Image[:Heart])
+    
+  end  
   
   enemy = Enemies.new
   
@@ -92,7 +98,7 @@ Window.load_resources do
       #敵1
       for i in 0..4
         if enemy.enemies[i].enemy_appear == true
-          if time % rand(10..20) == 0
+          if time % rand(100..200) == 0
             bullet << Bullet.new(enemy.enemies[i].x , enemy.enemies[i].y + Image[:apple].height - Image[:Tama].height)
           end
         end
@@ -102,8 +108,11 @@ Window.load_resources do
       
       Sprite.check(tama , enemy.enemies)
       Sprite.check(tama,scaffolds)
+      Sprite.check(player,bullet )
         
       enemy.draw
+      #Sprite.update($hearts)
+      Sprite.draw($hearts)
       
       Sprite.update(bullet)
       Sprite.draw(bullet)

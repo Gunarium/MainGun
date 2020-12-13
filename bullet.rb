@@ -51,4 +51,8 @@ class Bullet < Sprite
     
   end
   
+  def hit
+    self.vanish
+    $hearts.pop()
+  end
 end  
