@@ -69,6 +69,7 @@ Window.load_resources do
       
       # スペースキーが押されたらシーンを変える
       if Input.key_push?(K_SPACE)
+        enemy = Enemies.new
         GAME_INFO[:scene] = :playing
       end
     
@@ -111,12 +112,19 @@ Window.load_resources do
       Sprite.check(player,bullet )
         
       enemy.draw
+      
+      wave = enemy.wave
       #Sprite.update($hearts)
       Sprite.draw($hearts)
       
       Sprite.update(bullet)
       Sprite.draw(bullet)
       time+=1
+      
+      if wave
+        Sprite.clean(enemy.enemies)
+        GAME_INFO[:scene] = :title
+      end
     end
   end
 end
