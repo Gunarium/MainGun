@@ -10,13 +10,14 @@ require_remote "enemy2.rb"
 require_remote "enemy3.rb"
 require_remote "enemy4.rb"
 require_remote "enemies.rb"
+#require_remote "boss.rb"
 
 Image.register(:Tama,'images/player.png')
 Image.register(:apple, 'images/apple.png')
 Image.register(:Heart,'images/player.png')
 
 
-time=0
+$time=0
 
 GROUND_Y = 700
 
@@ -39,7 +40,7 @@ Window.load_resources do
   #enemy = Enemy.new
   tama=[]
   $hearts=[]
-  for i in 0..3
+  for i in 0..5
     $hearts << Sprite.new(Window.width-(i*Image[:Heart].width),Window.height-Image[:Heart].height , Image[:Heart])
     
   end  
@@ -58,6 +59,9 @@ Window.load_resources do
   #BGM
   bgm = Bgm.new
   
+  #boss_a = 0
+  #boss = nil
+  
   Window.loop do
     
     # シーンごとの処理
@@ -75,7 +79,7 @@ Window.load_resources do
     
     when :playing
     
-      if time % (60*(60+13)) == 0
+      if $time % (60*(60+13)) == 0
         bgm.play
       end
       # ステージを描画
@@ -88,7 +92,7 @@ Window.load_resources do
       
       enemy.update
       
-      if (time%15==0 && Input.mouse_down?(M_LBUTTON)) || Input.mouse_push?(M_LBUTTON)
+      if ($time%15==0 && Input.mouse_down?(M_LBUTTON)) || Input.mouse_push?(M_LBUTTON)
         tama << Tama.new(player.x,player.y)
       end  
       Sprite.update(tama)
@@ -99,18 +103,17 @@ Window.load_resources do
       #敵1
       for i in 0..4
         if enemy.enemies[i].enemy_appear == true
-          if time % rand(100..200) == 0
+          if $time % rand(100..200) == 0
             bullet << Bullet.new(enemy.enemies[i].x , enemy.enemies[i].y + Image[:apple].height - Image[:Tama].height)
           end
         end
       end
   
       
-      
-      Sprite.check(tama , enemy.enemies)
       Sprite.check(tama,scaffolds)
-      Sprite.check(player,bullet )
-        
+      Sprite.check(tama , enemy.enemies)
+      Sprite.check(bullet , player)
+      Sprite.check(enemy.enemies , player)
       enemy.draw
       
       wave = enemy.wave
@@ -119,15 +122,23 @@ Window.load_resources do
       
       Sprite.update(bullet)
       Sprite.draw(bullet)
-      time+=1
+      $time+=1
       
       if wave
         Sprite.clean(enemy.enemies)
-        GAME_INFO[:scene] = :boss
+        GAME_INFO[:scene] = :boss_scene
       end
       
-    when :boss
-      if time % (60*(60+13)) == 0
+    when :boss_scene
+      '''
+      if boss_a == 0
+        #boss設定
+        boss = Boss.new
+        boss_a = 1
+      end
+      '''
+      
+      if $time % (60*(60+13)) == 0
         bgm.play
       end
       # ステージを描画
@@ -138,14 +149,24 @@ Window.load_resources do
       Sprite.check(player, scaffolds)
       player.update
       
-      if (time%15==0 && Input.mouse_down?(M_LBUTTON)) || Input.mouse_push?(M_LBUTTON)
+      if ($time%15==0 && Input.mouse_down?(M_LBUTTON)) || Input.mouse_push?(M_LBUTTON)
         tama << Tama.new(player.x,player.y)
       end  
       Sprite.update(tama)
       
       player.draw
+      
+      Sprite.draw($hearts)
+      
+      #boss.update($time)
+      #Sprite.check(player, boss.laser)
+      #Sprite.draw(boss.laser)
+      #boss.draw
+      
+      
+      
       Sprite.draw(tama)
-      time+=1
+      $time+=1
     end
   end
 end

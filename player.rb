@@ -16,6 +16,7 @@ class Player < Sprite
     @y_prev = 0
     @y_temp = 0
     @two = -1   # ジャンプ回数
+    @now_time = 0
   end
   
   # 移動処理(xからself.xになった)
@@ -73,5 +74,15 @@ class Player < Sprite
       self.y = o.y - Image[:player].height
       @two = 0
     end
+  end
+  
+  def hit
+    #$hearts.pop()
+    
+    if $time-@now_time > 60
+      $hearts.pop()
+      @now_time = $time
+    end
+    
   end
 end
