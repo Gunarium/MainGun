@@ -1,6 +1,6 @@
 require 'dxopal'
 include DXOpal
-Image.register(:Tama,'images/player.png')
+Image.register(:Tama,'images/small.png')
 
 class Bullet < Sprite
   
@@ -8,6 +8,7 @@ class Bullet < Sprite
     @now_x=x
     @now_y=y
     @image = Image[:Tama]
+    @image.set_color_key([0, 0, 0])
     super(@now_x,@now_y,@image)
     @vec = rand(4)
   end

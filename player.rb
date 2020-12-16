@@ -9,9 +9,7 @@ class Player < Sprite
     x = Window.width / 2
     y = GROUND_Y - Image[:player].height
     image_left = Image[:player]
-    image_left.set_color_key([255, 255, 255])
-    #image_right = Image[:player_right]
-    #image_right.set_color_key([255, 255, 255])
+    image_left.set_color_key([100, 100, 100])
     super(x, y, image_left)
     @y_prev = 0
     @y_temp = 0
@@ -22,10 +20,8 @@ class Player < Sprite
   # 移動処理(xからself.xになった)
   def update
     if Input.key_down?(K_A) && self.x > 0
-      #image = image_left
       self.x -= 6
     elsif Input.key_down?(K_D) && self.x < (Window.width - Image[:player].width)
-      #image = image_right
       self.x += 6
     end
     
@@ -67,7 +63,7 @@ class Player < Sprite
   end
   
   def shot(o)
-    if self.y <= @y_prev || self.y > o.y
+    if self.y <= @y_prev || self.y + Image[:player].height - 20 > o.y
       next
     else
       @y_prev = o.y - Image[:player].height

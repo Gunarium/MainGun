@@ -12,9 +12,11 @@ require_remote "enemy4.rb"
 require_remote "enemies.rb"
 #require_remote "boss.rb"
 
-Image.register(:Tama,'images/player.png')
+Image.register(:Tama,'images/small.png')
 Image.register(:apple, 'images/apple.png')
 Image.register(:Heart,'images/player.png')
+#life = Image[:Heart]
+#life.set_color_key([100, 100, 100])
 
 
 $time=0
@@ -37,12 +39,14 @@ Window.load_resources do
   Window.height = 750
   
   player = Player.new
+  player.collision = 0, 0, 45, 100
   #enemy = Enemy.new
   tama=[]
   $hearts=[]
   for i in 0..5
-    $hearts << Sprite.new(Window.width-(i*Image[:Heart].width),Window.height-Image[:Heart].height , Image[:Heart])
-    
+    life = Image[:Heart]
+    life.set_color_key([100, 100, 100])
+    $hearts << Sprite.new(Window.width-(i*Image[:Heart].width),Window.height-Image[:Heart].height , life)
   end  
   
   enemy = Enemies.new
@@ -89,6 +93,13 @@ Window.load_resources do
       # player
       Sprite.check(player, scaffolds)
       player.update
+      
+      # 向き
+      if Input.mouse_pos_x >= player.x + 100
+        player.scale_x = 1
+      else
+        player.scale_x = -1
+      end
       
       enemy.update
       
@@ -148,6 +159,11 @@ Window.load_resources do
       # player
       Sprite.check(player, scaffolds)
       player.update
+      if Input.mouse_pos_x >= player.x + 100
+        player.scale_x = 1
+      else
+        player.scale_x = -1
+      end
       
       if ($time%15==0 && Input.mouse_down?(M_LBUTTON)) || Input.mouse_push?(M_LBUTTON)
         tama << Tama.new(player.x,player.y)
