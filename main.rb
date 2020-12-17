@@ -6,6 +6,7 @@ require_remote "Tama.rb"
 require_remote "bullet.rb"
 require_remote "enemy.rb"
 require_remote "bgm.rb"
+require_remote "bgm_boss.rb"
 require_remote "enemy2.rb"
 require_remote "enemy3.rb"
 require_remote "enemy4.rb"
@@ -62,6 +63,7 @@ Window.load_resources do
   
   #BGM
   bgm = Bgm.new
+  #bgm_boss = Bgm_boss.new
   
   boss_a = 0
   boss = nil
