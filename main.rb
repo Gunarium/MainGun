@@ -5,8 +5,6 @@ require_remote "player.rb"
 require_remote "Tama.rb"
 require_remote "bullet.rb"
 require_remote "enemy.rb"
-require_remote "bgm.rb"
-require_remote "bgm_boss.rb"
 require_remote "enemy2.rb"
 require_remote "enemy3.rb"
 require_remote "enemy4.rb"
@@ -16,11 +14,15 @@ require_remote "boss.rb"
 Image.register(:Tama,'images/small.png')
 Image.register(:apple, 'images/apple.png')
 Image.register(:Heart,'images/player.png')
+
+Sound.register(:bgm, 'sounds/Devil_Disaster.wav')
+Sound.register(:bgm_boss, 'sounds/boss.WAV')
 #life = Image[:Heart]
 #life.set_color_key([100, 100, 100])
 
 
 $time=0
+boss_time = 0
 
 GROUND_Y = 700
 
@@ -61,10 +63,6 @@ Window.load_resources do
   scaffolds << Sprite.new(Window.width/2 - 250, (GROUND_Y/3).to_i, Image[:scaffold_long])
   scaffolds << Sprite.new(0, GROUND_Y, Image[:floor])
   
-  #BGM
-  bgm = Bgm.new
-  #bgm_boss = Bgm_boss.new
-  
   boss_a = 0
   boss = nil
   
@@ -86,7 +84,7 @@ Window.load_resources do
     when :playing
     
       if $time % (60*(60+13)) == 0
-        bgm.play
+        Sound[:bgm].play
       end
       # ステージを描画
       Window.draw_box_fill(0, 0, Window.width, GROUND_Y, [128, 255, 255])
@@ -140,17 +138,20 @@ Window.load_resources do
       if wave
         Sprite.clean(enemy.enemies)
         GAME_INFO[:scene] = :boss_scene
+        Sound[:bgm].stop
       end
       
     when :boss_scene
       if boss_a == 0
         #boss設定
         boss = Boss.new
+        boss_time = $time
+        Sound[:bgm_boss].play
         boss_a = 1
       end
       
-      if $time % (60*(60+13)) == 0
-        bgm.play
+      if ($time - boss_time) % (60*(60+13)) == 0
+        Sound[:bgm_boss].play
       end
       # ステージを描画
       Window.draw_box_fill(0, 0, Window.width, GROUND_Y, [0, 0, 0])

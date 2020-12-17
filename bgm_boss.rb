@@ -1,7 +1,7 @@
 require 'dxopal'
 include DXOpal
 
-Sound.register(:bgm, 'sounds/boss.wav')
+Sound.register(:bgm_boss, 'sounds/boss.WAV')
 
 class Bgm_boss
     #attr_reader :playsound
@@ -11,7 +11,7 @@ class Bgm_boss
     end
     
     def play
-        Sound[:bgm].play
+        Sound[:bgm_boss].play
         @playsound=false
     end
 end
