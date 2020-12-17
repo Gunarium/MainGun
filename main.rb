@@ -10,7 +10,7 @@ require_remote "enemy2.rb"
 require_remote "enemy3.rb"
 require_remote "enemy4.rb"
 require_remote "enemies.rb"
-#require_remote "boss.rb"
+require_remote "boss.rb"
 
 Image.register(:Tama,'images/small.png')
 Image.register(:apple, 'images/apple.png')
@@ -63,8 +63,8 @@ Window.load_resources do
   #BGM
   bgm = Bgm.new
   
-  #boss_a = 0
-  #boss = nil
+  boss_a = 0
+  boss = nil
   
   Window.loop do
     
@@ -141,13 +141,11 @@ Window.load_resources do
       end
       
     when :boss_scene
-      '''
       if boss_a == 0
         #boss設定
         boss = Boss.new
         boss_a = 1
       end
-      '''
       
       if $time % (60*(60+13)) == 0
         bgm.play
@@ -174,10 +172,10 @@ Window.load_resources do
       
       Sprite.draw($hearts)
       
-      #boss.update($time)
+      boss.update
       #Sprite.check(player, boss.laser)
       #Sprite.draw(boss.laser)
-      #boss.draw
+      boss.draw
       
       
       
