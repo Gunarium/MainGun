@@ -4,7 +4,7 @@ require_remote "rizin.rb"
 require_remote "target.rb"
 
 Image.register(:Tama,'images/player.png')
-
+Image.register(:laser, 'images/laser.png')
 
 class Boss < Sprite
     attr_reader :attack 
@@ -25,6 +25,8 @@ class Boss < Sprite
         
         super(@x , @y ,image)
         @action = Action.new
+        @laser_new = false
+        @laser = []
         
     end
     
@@ -52,11 +54,32 @@ class Boss < Sprite
                 $idou = true
                 $target.clear
                     
-            end    
+            end
+            
+        elsif $laser_atk
+            if ($time - $laser_wait) <= 120
+                next
+            elsif ($time - $laser_wait) <= 300
+                if not @laser_new
+                    @laser_new = true
+                    for way in 0..4
+                        laser = Sprite.new(@x, @y-1485, Image[:laser])
+                        laser.angle = way * 45
+                        @laser << laser
+                    end
+                end
+                Sprite.draw(@laser)
+            else
+                @laser.clear
+                @attack = false
+                @laser_new = false
+                $laser_atk = false
+                $idou = true
+            end
         end
         @x = $x_re
         @y = $y_re
-        @attack = @action.act(rand(0..1),@attack)
+        @attack = @action.act(rand(0..2),@attack)
     end
 end
 
@@ -93,6 +116,11 @@ class Action
             
             elsif i== 1
                 $nerau = true
+                attack = true
+                
+            elsif i == 2
+                $laser_atk = true
+                $laser_wait = $time
                 attack = true
                 
             end

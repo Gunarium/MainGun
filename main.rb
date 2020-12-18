@@ -57,6 +57,8 @@ Window.load_resources do
   $target = []
   $nerau = false
   $ssss = 0
+  $laser_atk = false
+  $laser_wait = 0
   
   enemy = Enemies.new
   
