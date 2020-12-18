@@ -9,7 +9,7 @@ class Player < Sprite
     x = Window.width / 2
     y = GROUND_Y - Image[:player].height
     image_left = Image[:player]
-    image_left.set_color_key([100, 100, 100])
+    image_left.set_color_key([0, 0, 255])
     super(x, y, image_left)
     @y_prev = 0
     @y_temp = 0
@@ -63,7 +63,7 @@ class Player < Sprite
   end
   
   def shot(o)
-    if self.y <= @y_prev || self.y + Image[:player].height - 20 > o.y
+    if self.y <= @y_prev || self.y + Image[:player].height - 30 > o.y || Input.key_down?(K_S)
       next
     else
       @y_prev = o.y - Image[:player].height
