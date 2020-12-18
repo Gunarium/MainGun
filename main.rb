@@ -51,18 +51,23 @@ Window.load_resources do
   player.collision = 40, 0, 80, 80
   #enemy = Enemy.new
   tama=[]
-  $hearts=[]
+  $hearts = []
+  $cloud = false
+  $rizin = nil
+  $target = []
+  $nerau = false
+  $ssss = 0
   
   enemy = Enemies.new
   
   bullet = []
   
   # 足場を配置
-  scaffolds = []
-  scaffolds << Sprite.new(0, (GROUND_Y*2/3).to_i, Image[:scaffold])
-  scaffolds << Sprite.new(Window.width - Image[:scaffold].width, (GROUND_Y*2/3).to_i, Image[:scaffold])
-  scaffolds << Sprite.new(Window.width/2 - 250, (GROUND_Y/3).to_i, Image[:scaffold_long])
-  scaffolds << Sprite.new(0, GROUND_Y, Image[:floor])
+  $scaffolds = []
+  $scaffolds << Sprite.new(0, (GROUND_Y*2/3).to_i, Image[:scaffold])
+  $scaffolds << Sprite.new(Window.width - Image[:scaffold].width, (GROUND_Y*2/3).to_i, Image[:scaffold])
+  $scaffolds << Sprite.new(Window.width/2 - 250, (GROUND_Y/3).to_i, Image[:scaffold_long])
+  $scaffolds << Sprite.new(0, GROUND_Y, Image[:floor])
   
   sound_start = false
   boss = nil
@@ -116,7 +121,7 @@ Window.load_resources do
     
       # ステージを描画
       Window.draw_box_fill(0, 0, Window.width, GROUND_Y, [128, 255, 255])
-      Sprite.draw(scaffolds)
+      Sprite.draw($scaffolds)
       
       # BGM
       if not sound_start
@@ -130,7 +135,7 @@ Window.load_resources do
       end
       
       # player
-      Sprite.check(player, scaffolds)
+      Sprite.check(player, $scaffolds)
       player.update
       
       # 向き
@@ -162,14 +167,14 @@ Window.load_resources do
       end
   
       
-      Sprite.check(tama,scaffolds)
+      Sprite.check(tama,$scaffolds)
       Sprite.check(tama , enemy.enemies)
       Sprite.check(bullet , player)
       Sprite.check(enemy.enemies , player)
       enemy.draw
       
       # ゲームオーバー
-      if $hearts.size  == 0
+      if $hearts.size  <= 0
         Sound[:bgm].stop
         GAME_INFO[:scene] = :game_over
         sound_start = false
@@ -207,11 +212,13 @@ Window.load_resources do
       
       # ステージを描画
       Window.draw_box_fill(0, 0, Window.width, GROUND_Y, [0, 0, 0])
-      Sprite.draw(scaffolds)
+      Sprite.draw($scaffolds)
       
       # player
-      Sprite.check(player, scaffolds)
+      Sprite.check(player, $scaffolds)
       player.update
+      $player_x = player.x
+      $player_y = player.y
       if Input.mouse_pos_x >= player.x + 80
         player.scale_x = -1
       else
@@ -234,7 +241,7 @@ Window.load_resources do
       #Sprite.draw(boss.laser)
       boss.draw
       
-      Sprite.check(tama,scaffolds)
+      Sprite.check(tama,$scaffolds)
       Sprite.draw(tama)
       $time+=1
       
