@@ -58,9 +58,9 @@ class Boss < Sprite
             end
             
         elsif $laser_atk
-            if ($time - $laser_wait) <= 120
+            if ($time - $laser_wait) <= 60
                 next
-            elsif ($time - $laser_wait) <= 300
+            elsif ($time - $laser_wait) <= 60
                 if not @laser_new
                     @laser_new = true
                     for way in 0..4
@@ -104,9 +104,9 @@ class Action
     def act(i,attack)
         
         if attack == false and $idou == true
-            if @count >=6 and $time % 30 == 0 
+            if @count >=3 and $time % 30 == 0 
                 @count += 1
-                if @count >= 6
+                if @count >= 3
                     $idou = false
                     @count = 0
                 end
