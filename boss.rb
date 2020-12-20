@@ -8,7 +8,7 @@ Image.register(:laser, 'images/laser.png')
 
 class Boss < Sprite
     attr_reader :attack 
-    attr_accessor :x ,:y
+    attr_accessor :x ,:y, :boss_dead
     def initialize
         @x_list = [300 , 500 , 700]
         @y_list = [100 ,300 ,500]
@@ -26,6 +26,8 @@ class Boss < Sprite
         super(@x , @y ,image)
         @action = Action.new
         @laser_new = false
+        @hp = 10
+        @boss_dead = false
         
         
         
@@ -84,6 +86,14 @@ class Boss < Sprite
         @attack = @action.act(0,@attack)
     end
     
+    def hit
+        if @hp >= 1
+            @hp -= 1
+        else
+            @boss_dead = true
+            self.vanish
+        end
+    end
    
 end
 

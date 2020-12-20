@@ -5,8 +5,8 @@ require_remote "enemy2.rb"
 require_remote "enemy3.rb"
 require_remote "enemy4.rb"
 
-Image.register(:scaffold, 'images/ashiba.png')
-Image.register(:scaffold_long, 'images/ashiba_long.png')
+Image.register(:scaffold, 'images/scaffold.png')
+#Image.register(:scaffold_long, 'images/ashiba_long.png')
 
 class Enemies < Sprite
     attr_reader :enemies , :wave
