@@ -3,33 +3,36 @@ include DXOpal
 
 require_remote "player.rb"
 
-Image.register(:lightning, 'images/apple.png')
+Image.register(:lightning, 'images/thunder1.png')
+
 
 class Rizin 
     def initialize(x)
         @x = x
         @lightning_width=100
-        @riz = nil
+        $riz = nil
         @riz_ini_time = $time
         @riz_dr_fl = false
+        $riz_appear=false
     end
     
     def fall
         
         Window.draw_box_fill(@x-@lightning_width, 0, @x+@lightning_width, 50, [255, 255, 255])
         cloud = true
-            
+        
         if @riz_dr_fl
-            @riz.draw
+            $riz.draw
         end
             
         if $time - @riz_ini_time == 60*3
-            @riz = Lightning.new(@x)
-            @riz.draw
+            $riz = Lightning.new(@x)
+            $riz_appear=true
+            $riz.draw
             @riz_dr_fl = true
             
         elsif $time - @riz_ini_time == 60*4
-            @riz.lit_van
+            $riz.lit_van
             @riz_ini_time = 0
             cloud = false
         end
@@ -48,6 +51,7 @@ class Lightning < Sprite
     
     def lit_van
         self.vanish
+        $riz_appear=false
     end
 end
 '''

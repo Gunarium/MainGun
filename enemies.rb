@@ -33,7 +33,7 @@ class Enemies < Sprite
             end
         end
         
-        if count == 5
+        if count == 1
             @wave = true
             count = 0
             

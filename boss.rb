@@ -21,12 +21,13 @@ class Boss < Sprite
         image = Image[:Tama]
         @i = nil
         $idou = true
-        
+        @laser = []
         
         super(@x , @y ,image)
         @action = Action.new
         @laser_new = false
-        @laser = []
+        
+        
         
     end
     
@@ -81,6 +82,8 @@ class Boss < Sprite
         @y = $y_re
         @attack = @action.act(rand(0..2),@attack)
     end
+    
+   
 end
 
 class Action 

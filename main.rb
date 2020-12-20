@@ -219,6 +219,11 @@ Window.load_resources do
       # player
       Sprite.check(player, $scaffolds)
       player.update
+      if $riz_appear==true
+            Sprite.check($riz,player)
+      end    
+      Sprite.check($target,player)
+    
       $player_x = player.x
       $player_y = player.y
       if Input.mouse_pos_x >= player.x + 80
@@ -242,6 +247,11 @@ Window.load_resources do
       #Sprite.check(player, boss.laser)
       #Sprite.draw(boss.laser)
       boss.draw
+      if $hearts.size  <= 0
+        Sound[:bgm].stop
+        GAME_INFO[:scene] = :game_over
+        sound_start = false
+      end
       
       Sprite.check(tama,$scaffolds)
       Sprite.draw(tama)
