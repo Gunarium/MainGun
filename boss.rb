@@ -32,7 +32,7 @@ class Boss < Sprite
     end
     
     
-    def update
+    def update(person)
         if $cloud
             $cloud = $rizin.fall
             if $cloud == false
@@ -69,6 +69,7 @@ class Boss < Sprite
                         @laser << laser
                     end
                 end
+                Sprite.check(@laser, person)
                 Sprite.draw(@laser)
             else
                 @laser.clear

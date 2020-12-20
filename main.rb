@@ -88,7 +88,7 @@ Window.load_resources do
         sound_time = $time
       end
       
-      if ($time - sound_time) % (60*(60+13)) == 0
+      if ($time - sound_time) % (60*(60*2+30)) == 0
         Sound[:opening].play
       end
       
@@ -207,7 +207,7 @@ Window.load_resources do
       end
       
       # BGM
-      if ($time - sound_time) % (60*(60+13)) == 0
+      if ($time - sound_time) % (60*(60+30)) == 0
         Sound[:bgm_boss].play
         sound_start = true
       end
@@ -243,12 +243,13 @@ Window.load_resources do
       
       Sprite.draw($hearts)
       
-      boss.update
+      boss.update(player)
       #Sprite.check(player, boss.laser)
       #Sprite.draw(boss.laser)
       boss.draw
+      
       if $hearts.size  <= 0
-        Sound[:bgm].stop
+        Sound[:bgm_boss].stop
         GAME_INFO[:scene] = :game_over
         sound_start = false
       end
@@ -266,7 +267,7 @@ Window.load_resources do
         sound_time = $time
       end
       
-      if ($time - sound_time) % (60*(60+13)) == 0
+      if ($time - sound_time) % (60*(60)) == 0
         Sound[:dead].play
       end
       
