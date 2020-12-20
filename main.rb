@@ -14,12 +14,10 @@ require_remote "boss.rb"
 Image.register(:Tama,'images/small.png')
 Image.register(:apple, 'images/apple.png')
 Image.register(:Heart,'images/player.png')
-Image.register(:enemy, 'images/pen1.png')
 
-Image.register(:scaffold, 'images/scaffold.png')
-#Image.register(:scaffold_long, 'images/ashiba_long.png')
+Image.register(:scaffold, 'images/ashiba.png')
+Image.register(:scaffold_long, 'images/ashiba_long.png')
 Image.register(:floor, 'images/floor.png')
-Image.register(:background, 'images/background.png')
 
 Image.register(:title, 'images/title.PNG')
 Image.register(:instraction, 'images/instraction.PNG')
@@ -70,7 +68,7 @@ Window.load_resources do
   $scaffolds = []
   $scaffolds << Sprite.new(0, (GROUND_Y*2/3).to_i, Image[:scaffold])
   $scaffolds << Sprite.new(Window.width - Image[:scaffold].width, (GROUND_Y*2/3).to_i, Image[:scaffold])
-  $scaffolds << Sprite.new(Window.width/2 - 150, (GROUND_Y/3).to_i, Image[:scaffold])
+  $scaffolds << Sprite.new(Window.width/2 - 250, (GROUND_Y/3).to_i, Image[:scaffold_long])
   $scaffolds << Sprite.new(0, GROUND_Y, Image[:floor])
   
   sound_start = false
@@ -124,7 +122,7 @@ Window.load_resources do
     when :playing
     
       # ステージを描画
-      Window.draw(0, 0, Image[:background])
+      Window.draw_box_fill(0, 0, Window.width, GROUND_Y, [128, 255, 255])
       Sprite.draw($scaffolds)
       
       # BGM
@@ -165,7 +163,7 @@ Window.load_resources do
       for i in 0..4
         if enemy.enemies[i].enemy_appear == true
           if $time % rand(100..200) == 0
-            bullet << Bullet.new(enemy.enemies[i].x , enemy.enemies[i].y + Image[:apple].height - Image[:Tama].height)
+            bullet << Bullet.new(enemy.enemies[i].x , enemy.enemies[i].y + Image[:enemy].height - Image[:Tama].height)
           end
         end
       end
@@ -177,7 +175,6 @@ Window.load_resources do
       Sprite.check(enemy.enemies , player)
       enemy.draw
       
-      p heart:$hearts.size
       # ゲームオーバー
       if $hearts.size  <= 1
         Sound[:bgm].stop
@@ -216,14 +213,15 @@ Window.load_resources do
       end
       
       # ステージを描画
-      Window.draw(0, 0, Image[:background])
+      Window.draw_box_fill(0, 0, Window.width, GROUND_Y, [0, 0, 0])
       Sprite.draw($scaffolds)
       
       # player
       Sprite.check(player, $scaffolds)
       player.update
       if $riz_appear==true
-            Sprite.check($riz,player)
+        Sprite.check($riz1,player)
+        Sprite.check($riz2,player)
       end    
       Sprite.check($target,player)
     
@@ -251,7 +249,6 @@ Window.load_resources do
       #Sprite.draw(boss.laser)
       boss.draw
       
-      # ゲームオーバー
       if $hearts.size  <= 1
         Sound[:bgm_boss].stop
         GAME_INFO[:scene] = :game_over
@@ -259,40 +256,8 @@ Window.load_resources do
       end
       
       Sprite.check(tama,$scaffolds)
-      Sprite.check(tama , boss)
       Sprite.draw(tama)
-      
-      # ゲームクリア
-      if boss.boss_dead
-        Sound[:bgm_boss].stop
-        GAME_INFO[:scene] = :clear
-        sound_start = false
-      end
-      
       $time+=1
-    
-    when :clear
-      
-      # タイトル画面
-      Window.draw(20, 15, Image[:clear])
-      
-      if not sound_start
-        sound_start = true
-        sound_time = $time
-      end
-      
-      if ($time - sound_time) % (60*(60)) == 0
-        Sound[:dead].play
-      end
-      
-      # スペースキーが押されたらシーンを変える
-      if Input.key_push?(K_T)
-        Sound[:dead].stop
-        GAME_INFO[:scene] = :title
-        sound_start = false
-      end
-      
-      $time += 1
       
     when :game_over
       
@@ -307,16 +272,9 @@ Window.load_resources do
         Sound[:dead].play
       end
       
-      # スペースキーが押されたらゲーム再プレイ
+      # スペースキーが押されたらシーンを変える
       if Input.key_push?(K_SPACE)
         GAME_INFO[:scene] = :instraction
-        $hearts = []
-        Sound[:dead].stop
-        sound_start = false
-      end
-      
-      if Input.key_push?(K_T)
-        GAME_INFO[:scene] = :title
         $hearts = []
         Sound[:dead].stop
         sound_start = false

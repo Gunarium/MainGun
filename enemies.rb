@@ -31,6 +31,12 @@ class Enemies < Sprite
             if @enemies[i].van == true
                 count += 1
             end
+            
+            if @enemies[i].vec == true
+                @enemies[i].scale_x = -1
+            else
+                @enemies[i].scale_x = 1
+            end
         end
         
         if count == 1
