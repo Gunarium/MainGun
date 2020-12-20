@@ -60,6 +60,8 @@ Window.load_resources do
   $ssss = 0
   $laser_atk = false
   $laser_wait = 0
+  $riz_dr_fl1 = nil
+  $riz_dr_fl2 = nil
   
   enemy = Enemies.new
   
@@ -250,7 +252,16 @@ Window.load_resources do
       #Sprite.draw(boss.laser)
       boss.draw
       
+      # ゲームオーバー
       if $hearts.size  <= 1
+        boss.vanish
+        $cloud = false
+        if $riz_dr_fl1
+          $riz1.lit_van
+        end
+        if $riz_dr_fl2
+          $riz2.lit_van
+        end
         Sound[:bgm_boss].stop
         GAME_INFO[:scene] = :game_over
         sound_start = false

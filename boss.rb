@@ -83,7 +83,7 @@ class Boss < Sprite
         end
         @x = $x_re
         @y = $y_re
-        @attack = @action.act(0,@attack)
+        @attack = @action.act(2,@attack)
     end
     
     def hit
