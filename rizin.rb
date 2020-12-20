@@ -10,31 +10,51 @@ class Rizin
     def initialize(x)
         @x = x
         @lightning_width=100
-        $riz = nil
+        $riz1 = nil
+        $riz2 = nil
         @riz_ini_time = $time
-        @riz_dr_fl = false
+        @riz_dr_fl1 = false
+        @riz_dr_fl2 = false
         $riz_appear=false
+        @cloud2 = false
+        @x1 = nil
     end
     
-    def fall
+    def fall(player)
         
         Window.draw_box_fill(@x-@lightning_width, 0, @x+@lightning_width, 50, [255, 255, 255])
         cloud = true
         
-        if @riz_dr_fl
-            $riz.draw
+        if @cloud2
+            Window.draw_box_fill(@x1-@lightning_width, 0, @x1+@lightning_width, 50, [255, 255, 255])
+        end
+        if @riz_dr_fl1
+            $riz1.draw
+        end
+        if @riz_dr_fl2
+            $riz2.draw
         end
             
-        if $time - @riz_ini_time == 60*3
-            $riz = Lightning.new(@x)
+        if $time - @riz_ini_time == 60*1.5
+            $riz1 = Lightning.new(@x)
             $riz_appear=true
-            $riz.draw
-            @riz_dr_fl = true
-            
+            $riz1.draw
+            @riz_dr_fl1 = true
+            @cloud2 = true
+            @x1 = player.x
+        
+        elsif $time - @riz_ini_time == 60*2
+            $riz1.lit_van
+            @riz_dr_fl1 = false
+        elsif $time - @riz_ini_time == 60*3
+            $riz2 = Lightning.new(@x1)
+            $riz2.draw
+            @riz_dr_fl2 = true
         elsif $time - @riz_ini_time == 60*4
-            $riz.lit_van
+            $riz2.lit_van
             @riz_ini_time = 0
             cloud = false
+            $riz_appear=false
         end
         
         return cloud
@@ -51,7 +71,6 @@ class Lightning < Sprite
     
     def lit_van
         self.vanish
-        $riz_appear=false
     end
 end
 '''

@@ -34,7 +34,7 @@ class Boss < Sprite
     
     def update(person)
         if $cloud
-            $cloud = $rizin.fall
+            $cloud = $rizin.fall(person)
             if $cloud == false
                 @attack = false
                 $idou = true
@@ -81,7 +81,7 @@ class Boss < Sprite
         end
         @x = $x_re
         @y = $y_re
-        @attack = @action.act(rand(0..2),@attack)
+        @attack = @action.act(0,@attack)
     end
     
    
@@ -97,9 +97,9 @@ class Action
     def act(i,attack)
         
         if attack == false and $idou == true
-            if @count >=4 and $time % 60 == 0 
+            if @count >=6 and $time % 60 == 0 
                 @count += 1
-                if @count == 6
+                if @count >= 6
                     $idou = false
                     @count = 0
                 end

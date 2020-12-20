@@ -220,7 +220,8 @@ Window.load_resources do
       Sprite.check(player, $scaffolds)
       player.update
       if $riz_appear==true
-            Sprite.check($riz,player)
+        Sprite.check($riz1,player)
+        Sprite.check($riz2,player)
       end    
       Sprite.check($target,player)
     
