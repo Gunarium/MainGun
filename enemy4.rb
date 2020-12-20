@@ -21,13 +21,13 @@ class Enemy4 < Sprite
   def update
     if @vec == true
       @x += 4
-      if @x > 780 - Image[:enemy].width
+      if @x > 650 - Image[:enemy].width
         @vec = false
       end
     
     elsif @vec == false
       @x -= 4
-      if @x < 230
+      if @x < 350
         @vec = true
       end
       

@@ -28,9 +28,6 @@ class Boss < Sprite
         @laser_new = false
         @hp = 10
         @boss_dead = false
-        
-        
-        
     end
     
     
@@ -94,7 +91,6 @@ class Boss < Sprite
             self.vanish
         end
     end
-   
 end
 
 class Action 

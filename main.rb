@@ -31,6 +31,7 @@ Sound.register(:bgm_boss, 'sounds/boss.WAV')
 Sound.register(:opening, 'sounds/opening.WAV')
 Sound.register(:bang, 'sounds/bang.wav')
 Sound.register(:dead, 'sounds/dead.wav')
+Sound.register(:ending, 'sounds/end.wav')
 
 
 $time=0
@@ -268,8 +269,40 @@ Window.load_resources do
       end
       
       Sprite.check(tama,$scaffolds)
+      Sprite.check(tama, boss)
       Sprite.draw(tama)
+      
+      # ボス撃破
+      if boss.boss_dead
+        Sound[:bgm_boss].stop
+        GAME_INFO[:scene] = :clear
+        sound_start = false
+      end
+      
       $time+=1
+    
+    when :clear
+      
+      Window.draw(20, 15, Image[:clear])
+      
+      if not sound_start
+        sound_start = true
+        sound_time = $time
+      end
+      
+      if ($time - sound_time) % (60*(60)) == 0
+        Sound[:ending].play
+      end
+      
+      # スペースキーが押されたらシーンを変える
+      if Input.key_push?(K_T)
+        GAME_INFO[:scene] = :title
+        $hearts = []
+        Sound[:ending].stop
+        sound_start = false
+      end
+      
+      $time += 1
       
     when :game_over
       
