@@ -60,7 +60,7 @@ class Boss < Sprite
         elsif $laser_atk
             if ($time - $laser_wait) <= 60
                 next
-            elsif ($time - $laser_wait) <= 60
+            elsif ($time - $laser_wait) <= 90
                 if not @laser_new
                     @laser_new = true
                     for way in 0..4
@@ -81,7 +81,7 @@ class Boss < Sprite
         end
         @x = $x_re
         @y = $y_re
-        @attack = @action.act(rand(0..2),@attack)
+        @attack = @action.act(2,@attack)
     end
     
     def hit

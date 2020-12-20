@@ -35,7 +35,7 @@ class Rizin
             $riz2.draw
         end
             
-        if $time - @riz_ini_time == 60*1
+        if $time - @riz_ini_time == 60*0.5
             $riz1 = Lightning.new(@x)
             $riz_appear=true
             $riz1.draw
@@ -43,14 +43,14 @@ class Rizin
             @cloud2 = true
             @x1 = player.x
         
-        elsif $time - @riz_ini_time == 60*1.1
+        elsif $time - @riz_ini_time == 60*0.8
             $riz1.lit_van
             $riz_dr_fl1 = false
-        elsif $time - @riz_ini_time == 60*1.2
+        elsif $time - @riz_ini_time == 60*1.1
             $riz2 = Lightning.new(@x1)
             $riz2.draw
             $riz_dr_fl2 = true
-        elsif $time - @riz_ini_time == 60*1.3
+        elsif $time - @riz_ini_time == 60*1.4
             $riz2.lit_van
             @riz_ini_time = 0
             cloud = false
