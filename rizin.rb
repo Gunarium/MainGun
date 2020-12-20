@@ -4,7 +4,7 @@ include DXOpal
 require_remote "player.rb"
 
 Image.register(:lightning, 'images/thunder1.png')
-
+Sound.register(:Raimei, 'sounds/Raimei.wav')
 
 class Rizin 
     def initialize(x)
@@ -67,6 +67,7 @@ class Lightning < Sprite
         @x = x - Image[:lightning].width/2
         @y = 0
         super(@x, y, image)
+        Sound[:Raimei].play
     end
     
     def lit_van
