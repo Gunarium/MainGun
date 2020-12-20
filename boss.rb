@@ -27,7 +27,7 @@ class Boss < Sprite
         super(@x , @y ,image)
         @action = Action.new
         @laser_new = false
-        @hp = 10
+        @hp = 100
         @boss_dead = false
     end
     

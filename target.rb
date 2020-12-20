@@ -6,7 +6,9 @@ class Target < Sprite
     def initialize(x,y)
         @x=x
         @y=y
-        super(@x,@y,Image[:Target])
+        image = Image[:Target]
+        image.set_color_key([0,0,0])
+        super(@x,@y,image)
         @count=0
         @now_time=$time
     end

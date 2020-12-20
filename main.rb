@@ -28,7 +28,7 @@ Image.register(:clear, 'images/clear.PNG')
 # 音楽
 Sound.register(:bgm, 'sounds/Devil_Disaster.wav')
 Sound.register(:bgm_boss, 'sounds/boss.WAV')
-Sound.register(:opening, 'sounds/opening.WAV')
+Sound.register(:opening, 'sounds/opening.wav')
 Sound.register(:bang, 'sounds/bang.wav')
 Sound.register(:dead, 'sounds/dead.wav')
 Sound.register(:ending, 'sounds/end.wav')
@@ -166,7 +166,7 @@ Window.load_resources do
       #敵1
       for i in 0..4
         if enemy.enemies[i].enemy_appear == true
-          if $time % rand(100..200) == 0
+          if $time % rand(30..50) == 0
             bullet << Bullet.new(enemy.enemies[i].x , enemy.enemies[i].y + Image[:enemy].height - Image[:Tama].height)
           end
         end

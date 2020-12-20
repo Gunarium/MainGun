@@ -65,6 +65,7 @@ end
 class Lightning < Sprite
     def initialize(x)
         image = Image[:lightning]
+        image.set_color_key([0,0,0])
         @x = x - Image[:lightning].width/2
         @y = 0
         super(@x, y, image)
