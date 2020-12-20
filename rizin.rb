@@ -3,7 +3,7 @@ include DXOpal
 
 require_remote "player.rb"
 
-Image.register(:lightning, 'images/thunder1.png')
+Image.register(:lightning, 'images/thunder.png')
 Sound.register(:Raimei, 'sounds/Raimei.wav')
 
 class Rizin 

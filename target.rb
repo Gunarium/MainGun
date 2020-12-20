@@ -1,6 +1,6 @@
 require 'dxopal'
 include DXOpal
-Image.register(:Target,'images/apple.png')
+Image.register(:Target,'images/small.png')
 
 class Target < Sprite
     def initialize(x,y)

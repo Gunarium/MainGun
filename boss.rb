@@ -81,7 +81,7 @@ class Boss < Sprite
         end
         @x = $x_re
         @y = $y_re
-        @attack = @action.act(2,@attack)
+        @attack = @action.act(rand(0..2),@attack)
     end
     
     def hit
@@ -104,7 +104,7 @@ class Action
     def act(i,attack)
         
         if attack == false and $idou == true
-            if @count >=6 and $time % 60 == 0 
+            if @count >=6 and $time % 30 == 0 
                 @count += 1
                 if @count >= 6
                     $idou = false
@@ -113,7 +113,7 @@ class Action
                 
                 
            
-            elsif $time % 60 == 0 
+            elsif $time % 30 == 0 
                 $x_re = X_list.sample
                 $y_re = Y_list.sample
                 @count+=1
