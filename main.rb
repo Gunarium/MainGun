@@ -13,7 +13,7 @@ require_remote "boss.rb"
 
 Image.register(:Tama,'images/small.png')
 Image.register(:apple, 'images/apple.png')
-Image.register(:Heart,'images/player.png')
+Image.register(:Heart,'images/life.png')
 
 Image.register(:scaffold, 'images/scaffold.png')
 #Image.register(:scaffold_long, 'images/ashiba_long.png')

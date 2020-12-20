@@ -1,14 +1,14 @@
 require 'dxopal'
 include DXOpal
-Image.register(:Tama,'images/small.png')
+Image.register(:mine,'images/my_bullet.png')
 
 class Tama<Sprite
   
   def initialize(x,y)
     @now_x=x
     @now_y=y
-    @image = Image[:Tama]
-    @image.set_color_key([0, 0, 0])
+    @image = Image[:mine]
+    @image.set_color_key([255, 255, 255])
     super(@now_x,@now_y,@image)
     if Input.mouse_pos_x>@now_x
         ddx=Input.mouse_pos_x-@now_x
@@ -36,7 +36,7 @@ class Tama<Sprite
     end  
   end  
   
- def shot
+  def shot
    self.vanish
   end
     

@@ -3,7 +3,7 @@ include DXOpal
 require_remote "rizin.rb"
 require_remote "target.rb"
 
-Image.register(:Tama,'images/player.png')
+Image.register(:boss,'images/boss.png')
 Image.register(:laser, 'images/laser.png')
 
 class Boss < Sprite
@@ -18,7 +18,8 @@ class Boss < Sprite
         @x = @x_list.sample
         @y = @y_list.sample
         @attack = false
-        image = Image[:Tama]
+        image = Image[:boss]
+        image.set_color_key([0, 0, 255])
         @i = nil
         $idou = true
         @laser = []
