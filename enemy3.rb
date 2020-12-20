@@ -1,7 +1,7 @@
 require 'dxopal'
 include DXOpal
 
-Image.register(:enemy, 'images/enemy.png')
+Image.register(:enemy, 'images/pen1.png')
 Sound.register(:explosion, 'sounds/explosion.wav')
 # アイテムを表すクラスを追加
 class Enemy3 < Sprite

@@ -15,9 +15,10 @@ Image.register(:Tama,'images/small.png')
 Image.register(:apple, 'images/apple.png')
 Image.register(:Heart,'images/player.png')
 
-Image.register(:scaffold, 'images/ashiba.png')
-Image.register(:scaffold_long, 'images/ashiba_long.png')
+Image.register(:scaffold, 'images/scaffold.png')
+#Image.register(:scaffold_long, 'images/ashiba_long.png')
 Image.register(:floor, 'images/floor.png')
+Image.register(:background, 'images/background.png')
 
 Image.register(:title, 'images/title.PNG')
 Image.register(:instraction, 'images/instraction.PNG')
@@ -68,7 +69,7 @@ Window.load_resources do
   $scaffolds = []
   $scaffolds << Sprite.new(0, (GROUND_Y*2/3).to_i, Image[:scaffold])
   $scaffolds << Sprite.new(Window.width - Image[:scaffold].width, (GROUND_Y*2/3).to_i, Image[:scaffold])
-  $scaffolds << Sprite.new(Window.width/2 - 250, (GROUND_Y/3).to_i, Image[:scaffold_long])
+  $scaffolds << Sprite.new(Window.width/2 - 150, (GROUND_Y/3).to_i, Image[:scaffold])
   $scaffolds << Sprite.new(0, GROUND_Y, Image[:floor])
   
   sound_start = false
@@ -89,7 +90,7 @@ Window.load_resources do
       end
       
       if ($time - sound_time) % (60*(60*2+30)) == 0
-        Sound[:opening].play
+        #Sound[:opening].play
       end
       
       # スペースキーが押されたらシーンを変える
@@ -122,7 +123,7 @@ Window.load_resources do
     when :playing
     
       # ステージを描画
-      Window.draw_box_fill(0, 0, Window.width, GROUND_Y, [128, 255, 255])
+      Window.draw(20, 15, Image[:background])
       Sprite.draw($scaffolds)
       
       # BGM
@@ -213,7 +214,7 @@ Window.load_resources do
       end
       
       # ステージを描画
-      Window.draw_box_fill(0, 0, Window.width, GROUND_Y, [0, 0, 0])
+      Window.draw(20, 15, Image[:background])
       Sprite.draw($scaffolds)
       
       # player
