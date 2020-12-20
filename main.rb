@@ -176,7 +176,7 @@ Window.load_resources do
       enemy.draw
       
       # ゲームオーバー
-      if $hearts.size  <= 0
+      if $hearts.size  <= 1
         Sound[:bgm].stop
         GAME_INFO[:scene] = :game_over
         sound_start = false
@@ -249,7 +249,7 @@ Window.load_resources do
       #Sprite.draw(boss.laser)
       boss.draw
       
-      if $hearts.size  <= 0
+      if $hearts.size  <= 1
         Sound[:bgm_boss].stop
         GAME_INFO[:scene] = :game_over
         sound_start = false
@@ -275,6 +275,7 @@ Window.load_resources do
       # スペースキーが押されたらシーンを変える
       if Input.key_push?(K_SPACE)
         GAME_INFO[:scene] = :instraction
+        $hearts = []
         Sound[:dead].stop
         sound_start = false
       end
